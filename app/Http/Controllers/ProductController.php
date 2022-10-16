@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Model\product;
 use App\Http\Requests\StoreproductRequest;
 use App\Http\Requests\UpdateproductRequest;
-
+use App\Http\Resources\product\productCollection;
+use App\Http\Resources\product\productResource;
 class ProductController extends Controller
 {
     /**
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return product::paginate(5);
     }
 
     /**
@@ -36,9 +37,8 @@ class ProductController extends Controller
      */
     public function store(StoreproductRequest $request)
     {
-        //
+        
     }
-
     /**
      * Display the specified resource.
      *
@@ -46,8 +46,9 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(product $product)
-    {
-        //
+    {       
+       
+        return new productResource($product);
     }
 
     /**

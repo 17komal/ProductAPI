@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Model\product;
 use App\Models\Model\review;
 use App\Http\Requests\StorereviewRequest;
 use App\Http\Requests\UpdatereviewRequest;
-
+use App\Http\Resources\reviewResource;
 class ReviewController extends Controller
 {
     /**
@@ -13,9 +13,10 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( $product)
     {
-        //
+        //return $product; 
+       return reviewResource::collection(Product::find($product)->review);
     }
 
     /**
