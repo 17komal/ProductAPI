@@ -14,6 +14,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index','show');
+    }
+
     public function index()
     {
         return product::paginate(5);
@@ -37,7 +42,16 @@ class ProductController extends Controller
      */
     public function store(StoreproductRequest $request)
     {
-        
+        $product =new product;
+        $product->name = $request->name;
+        $product->detail = $request->detail;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->discount = $request->discount;
+        $product->save();
+        return response([
+                'data'=>'Product store'
+        ]);
     }
     /**
      * Display the specified resource.
@@ -71,7 +85,10 @@ class ProductController extends Controller
      */
     public function update(UpdateproductRequest $request, product $product)
     {
-        //
+       $product->update($request->all());
+        return response([
+                'data'=>'Product Updated'
+        ]);
     }
 
     /**
@@ -82,6 +99,9 @@ class ProductController extends Controller
      */
     public function destroy(product $product)
     {
-        //
+        $product->delete();
+         return response([
+                'data'=>'Product Deleted'
+        ]);
     }
 }
